@@ -1,12 +1,13 @@
 int HEAD = 3;
 
-int ENA = 5;
-int ENB = 6;
-int IN1 = 7;
-int IN2 = 8;
-int IN3 = 9;
-int IN4 = 11;
+#define ENA 5
+#define ENB 6
+#define IN1 7
+#define IN2 8
+#define IN3 9
+#define IN4 11
 
+int carSpeed = 250;
 
 void setup() {
   // put your setup code here, to run once:
@@ -17,24 +18,62 @@ void setup() {
   pinMode(IN4,OUTPUT);
   pinMode(ENA,OUTPUT);
   pinMode(ENB,OUTPUT);
-  digitalWrite(ENA,HIGH);
-  digitalWrite(ENB,HIGH);
+  analogWrite(ENA,carSpeed);
+  analogWrite(ENB,carSpeed);
+  stop();
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  // put your main code here, to run repeatedly
 }
 
-void left(){
-  digitalWrite(IN1,HIGH);
-  
+void adjustSpeed(int newSpeed) {
+  carSpeed = newSpeed;
 }
-void right(){
 
-}
 void forward(){
+  analogWrite(ENA, carSpeed);
+  analogWrite(ENB, carSpeed);
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, HIGH);
 
 }
 void backward(){
+  analogWrite(ENA, carSpeed);
+  analogWrite(ENB, carSpeed);
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, HIGH);
+  digitalWrite(IN3, HIGH);
+  digitalWrite(IN4, LOW);
+}
+
+
+void left() {
+  analogWrite(ENA, carSpeed);
+  analogWrite(ENB, carSpeed);
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, HIGH);
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, HIGH); 
+}
+
+void right() {
+  analogWrite(ENA, carSpeed);
+  analogWrite(ENB, carSpeed);
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, HIGH);
+  digitalWrite(IN4, LOW);
+}
+
+void stop(){
+  analogWrite(ENA,0);
+  analogWrite(ENB,0);
+  digitalWrite(IN1,LOW);
+  digitalWrite(IN2,LOW);
+  digitalWrite(IN3,LOW);
+  digitalWrite(IN4,LOW);
 
 }
