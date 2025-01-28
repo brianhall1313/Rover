@@ -1,4 +1,11 @@
-int HEAD = 3;
+#include <Servo.h>
+
+Servo myServo;
+#define HEAD 3
+int maxAngle = 150;
+int minAngle =  70;
+int center = 110;
+
 
 #define ENA 5
 #define ENB 6
@@ -10,7 +17,7 @@ int HEAD = 3;
 int carSpeed = 250;
 
 void setup() {
-  // put your setup code here, to run once:
+  // wheel stuff:
   pinMode(HEAD, OUTPUT);
   pinMode(IN1,OUTPUT);
   pinMode(IN2,OUTPUT);
@@ -21,10 +28,14 @@ void setup() {
   analogWrite(ENA,carSpeed);
   analogWrite(ENB,carSpeed);
   stop();
+  //head stuff
+  myServo.attach(3,minAngle,maxAngle);
+  myServo.write(center);
 }
 
 void loop() {
   // put your main code here, to run repeatedly
+
 }
 
 void adjustSpeed(int newSpeed) {
