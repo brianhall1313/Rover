@@ -2,10 +2,12 @@
 
 Servo myServo;
 #define HEAD 3
-int maxAngle = 150;
-int minAngle =  70;
-int center = 110;
-
+//max 180
+int leftAngle = 135;
+//90 should be the center
+int centerAngle = 90;
+//min 0
+int rightAngle = 45;
 
 #define ENA 5
 #define ENB 6
@@ -29,13 +31,12 @@ void setup() {
   analogWrite(ENB,carSpeed);
   stop();
   //head stuff
-  myServo.attach(3,minAngle,maxAngle);
-  myServo.write(center);
+  myServo.attach(3);
+  myServo.write(centerAngle);
 }
 
 void loop() {
   // put your main code here, to run repeatedly
-
 }
 
 void adjustSpeed(int newSpeed) {
