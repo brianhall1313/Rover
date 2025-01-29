@@ -14,6 +14,10 @@ int rightAngle = 45;
 int Echo = A4;  
 int Trig = A5; 
 
+#define COLDIST 10
+int leftDist,rightDist = 0;
+#define turnTime 250
+
 //wheel vars
 #define ENA 5
 #define ENB 6
@@ -86,6 +90,20 @@ int distanceTest() {
   return (int)Fdistance;
 }
 
+void checkRange(){
+  Serial.println("checking left");
+  myServo.write(leftAngle);
+  delay(300);
+  leftDist = distanceTest();
+  delay(300);
+  Serial.println("checking right");
+  myServo.write(rightAngle);
+  delay(300);
+  rightDist = distanceTest();
+  delay(300);
+  myServo.write(centerAngle);
+}
+
 void setup() {
   // wheel stuff:
   pinMode(HEAD, OUTPUT);     
@@ -107,7 +125,19 @@ void setup() {
 }
 
 void loop() {
+  forward();
   // put your main code here, to run repeatedly
-  delay(3000);
-  Serial.println(distanceTest());
+  if (distanceTest() < COLDIST){
+    stop();
+    checkRange();
+    Serial.println("done checking");
+    if (leftDist >= rightDist){
+      left();
+      delay(turnTime);
+    }
+    else if(rightDist > leftDist){
+      right();
+      delay(turnTime);
+    }
+  }
 }
